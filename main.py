@@ -1,5 +1,7 @@
 from datetime import datetime
 import sys, argparse
+import os
+import requests
 from scanner import wp_version, headers, robots, xml_rpc, readme, wp_mu_plugins, \
     wp_cron, backup_db, debug_log, emergency_passwd_reset, full_path_disclosure, \
     registration, multisite, php_disabled, upload_directory_listing, upload_sql_dump, \
@@ -15,6 +17,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="Enter URL to scan: https://example.com/")
+    parser.add_argument(
+        "--update",
+        action="store_true",
+        help="Fetch and update plugin list"
+    )
     args = parser.parse_args()
     
     website_url = args.url
@@ -29,6 +36,13 @@ if __name__ == "__main__":
                (____/ by @amtzespinosa - v1.3.3   
                   
 """)
+    
+    if args.update:
+        from update import update_plugins, update_themes
+        #update_plugins()
+        update_themes()
+        print("[+] Update successfully finished. Please restart the program.")
+        exit()
 
     print(f"[+] Scanning:       {website_url}")
     print(f"[+] Time started:   {str(datetime.now())}\n")

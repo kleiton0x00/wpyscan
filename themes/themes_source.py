@@ -24,6 +24,14 @@ def extract_installed_themes(url):
                         }
                         installed_themes.append(theme_info)
 
+            # backup method
+            if not installed_themes:
+                pattern = r"/wp-content/themes/([^/]+)/"
+                match = re.search(pattern, response.text)
+                
+                if match:
+                    installed_themes.append(match.group(1))
+
             return installed_themes
 
     except requests.RequestException as e:

@@ -367,12 +367,15 @@ def wp_json_api(website_url):
 # Extract installed themes
 def themes_source(website_url):
     installed_themes = extract_installed_themes(website_url)
-    for theme in installed_themes:
-        name = theme['name']
-        if name not in found_themes:
-            found_themes.append(name.lower())
-    return installed_themes
-    # extract_version_css(installed_themes)
+    if installed_themes:
+        for theme in installed_themes:
+            name = theme['name']
+            if name not in found_themes:
+                found_themes.append(name.lower())
+        return installed_themes
+        # extract_version_css(installed_themes)
+    else:
+        print("[-] No theme found")
     
 def themes_brute_force(website_url):
     theme_list_file = "/usr/lib/wpyscan/themes/top_themes.txt"  # Replace with the path to your theme list file

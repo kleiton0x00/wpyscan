@@ -1,4 +1,5 @@
 import requests
+from avoidance.user_agents import get_random_user_agent
 
 class Headers:
     def __init__(self, url):
@@ -6,7 +7,10 @@ class Headers:
 
     def analyze_headers(self):
         try:
-            response = requests.get(self.url)
+            headers = {
+                "User-Agent": get_random_user_agent()
+            }
+            response = requests.get(self.url, headers=headers)
             if 200 <= response.status_code < 300:
                 print("[+] Headers:")
                 print("    [+] Interesting Entries:")
