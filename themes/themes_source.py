@@ -24,13 +24,18 @@ def extract_installed_themes(url):
                         }
                         installed_themes.append(theme_info)
 
+                        
+
             # backup method
             if not installed_themes:
                 pattern = r"/wp-content/themes/([^/]+)/"
                 match = re.search(pattern, response.text)
                 
                 if match:
-                    installed_themes.append(match.group(1))
+                    installed_themes.append({
+                        "name": match.group(1),
+                        "url": None
+                    })
 
             return installed_themes
 

@@ -26,7 +26,8 @@ class KnownLocations:
             res = requests.get(url, headers={'Range': 'bytes=0-3000'})
 
             if url.endswith('.zip'):
-                if re.match(r'\Aapplication/zip', res.headers['Content-Type'], re.I):
+                content_type = res.headers.get("Content-Type", "")
+                if re.match(r"^application/zip", content_type, re.I):
                     found.append(DbExport(url))
             elif self.sql_pattern().search(res.text):
                 found.append(DbExport(url))
